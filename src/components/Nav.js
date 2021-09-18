@@ -11,10 +11,11 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
+import { Link } from "@reach/router";
 
 import { white } from "@mui/material/colors";
 
-const mapping = [
+const iconMapping = [
     {
         icon: (
             <IconButton
@@ -27,6 +28,21 @@ const mapping = [
             </IconButton>
         ),
         anchor: "left",
+    },
+];
+
+const pageMapping = [
+    {
+        text: "Dashboard",
+        to: "/dashboard",
+    },
+    {
+        text: "Sessions",
+        to: "/sessions",
+    },
+    {
+        text: "Practice",
+        to: "/practice",
     },
 ];
 
@@ -59,23 +75,23 @@ export default function TemporaryDrawer() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {["Inbox", "Starred", "Send email", "Drafts"].map(
-                    (text, index) => (
-                        <ListItem button key={text}>
+                {pageMapping.map((page, index) => (
+                    <Link to={page.to}>
+                        <ListItem button key={page.text}>
                             <ListItemIcon>
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={page.text} />
                         </ListItem>
-                    )
-                )}
+                    </Link>
+                ))}
             </List>
         </Box>
     );
 
     return (
         <div>
-            {mapping.map((mappingItem) => (
+            {iconMapping.map((mappingItem) => (
                 <React.Fragment key={mappingItem.anchor}>
                     <Button onClick={toggleDrawer(mappingItem.anchor, true)}>
                         {mappingItem.icon}

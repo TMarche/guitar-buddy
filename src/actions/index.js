@@ -1,4 +1,5 @@
 import { SET_TRUE, SET_FALSE, ADD_SESSION, DELETE_SESSION } from "./types";
+import moment from "moment";
 
 export const setTrue = () => {
     return {
@@ -12,14 +13,14 @@ export const setFalse = () => {
     };
 };
 
-export const addSession = (id) => {
+export const addSession = (id, payload) => {
     return {
         type: ADD_SESSION,
         payload: {
             id,
-            name: "Name",
-            description: "TEST",
-            duration: 10,
+            date: moment(),
+            description: payload.description,
+            duration: payload.duration,
         },
     };
 };

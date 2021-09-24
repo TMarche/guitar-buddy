@@ -5,10 +5,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import DatePicker from "@mui/lab/DatePicker";
 import { addSession } from "../../actions";
 import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
 import InputAdornment from "@mui/material/InputAdornment";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 class AddSessionModal extends React.Component {
     constructor(props) {
@@ -18,8 +21,17 @@ class AddSessionModal extends React.Component {
             descriptionError: false,
             duration: "",
             durationError: false,
+            date: "",
+            dateError: false,
         };
     }
+
+    handleDateChanged = (date) => {
+        this.setState({
+            date: date,
+            dateError: false,
+        });
+    };
 
     handleDescriptionChanged = (e) => {
         this.setState({
@@ -47,6 +59,23 @@ class AddSessionModal extends React.Component {
                         Add a new session by filling out the 'Description' and
                         'Duration' fields.
                     </DialogContentText>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            margin="dense"
+                            label="Date"
+                            value={this.state.date}
+                            onChange={this.handleDateChanged}
+                            renderInput={(params) => (
+                                <TextField
+                                    margin="dense"
+                                    fullWidth
+                                    variant="standard"
+                                    {...params}
+                                />
+                            )}
+                        />
+                    </LocalizationProvider>
+
                     <TextField
                         autoFocus
                         margin="dense"
